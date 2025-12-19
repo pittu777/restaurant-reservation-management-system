@@ -20,7 +20,6 @@ api.interceptors.response.use(
   error => {
     if (error.response?.status === 401) {
       localStorage.removeItem("token");
-      // ❌ DO NOT hard redirect here
     }
     return Promise.reject(error);
   }
