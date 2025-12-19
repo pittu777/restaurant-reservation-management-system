@@ -11,12 +11,28 @@ import Home from "@/pages/Home";
 import CreateReservation from "@/pages/CreateReservation";
 import MyReservations from "@/pages/MyReservations";
 import UserProfile from "@/pages/UserProfile";
+import AuthLayout from "@/components/layout/AuthLayout";
 
 export default function AppRoutes() {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+        <Route
+        path="/login"
+        element={
+          <AuthLayout>
+            <Login />
+          </AuthLayout>
+        }
+      />
+
+      <Route
+        path="/register"
+        element={
+          <AuthLayout>
+            <Register />
+          </AuthLayout>
+        }
+      />
 
       <Route
         path="/"

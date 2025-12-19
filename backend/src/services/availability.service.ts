@@ -9,7 +9,7 @@ export const findAvailableTable = async (
   // Get tables that can seat the guests
   const tables = await Table.find({
     capacity: { $gte: guests },
-  }).sort({ capacity: 1 }); // smallest suitable table first
+  }).sort({ capacity: 1 });
 
   for (const table of tables) {
     const existingReservation = await Reservation.findOne({
@@ -25,4 +25,37 @@ export const findAvailableTable = async (
   }
 
   return null;
+};
+
+export const getAvailableTablesCount = async (
+  date: string,
+  timeSlot: string,
+  guests: number
+) => {
+  // Get all tables that can seat the guests
+  const suitableTables = await Table.find({
+    capacity: { $gte: guests },
+  });
+
+  const suitableTableIds = suitableTables.map(t => t._id);
+
+  // Get booked tables for this date/time
+  const bookedTables = await Reservation.find({
+    date,
+    timeSlot,
+    status: 'ACTIVE',
+    table: { $in: suitableTableIds },
+  }).select('table');
+
+  const bookedTableIds = bookedTables.map(r => r.table.toString());
+
+  const availableCount = suitableTables.filter(
+    t => !bookedTableIds.includes(t._id.toString())
+  ).length;
+
+  return {
+    available: availableCount,
+    total: suitableTables.length,
+    booked: suitableTables.length - availableCount,
+  };
 };

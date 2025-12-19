@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
-import { logout } from "@/features/auth/authSlice";
+import { logoutUser } from "@/features/auth/authSlice";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function Navbar() {
   const dispatch = useAppDispatch();
@@ -15,10 +15,10 @@ export default function Navbar() {
 
   if (!user) return null;
 
-  const handleLogout = () => {
-    dispatch(logout());
-    navigate("/login");
-  };
+  const handleLogout = useCallback(() => {
+  dispatch(logoutUser());
+  navigate("/login");
+}, [dispatch, navigate]);
 
   const linkClass = (path: string) =>
     cn(
@@ -31,7 +31,6 @@ export default function Navbar() {
   return (
     <header className="border-b bg-background">
       <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
-        {/* Left: App name + Tabs */}
         <div className="flex items-center gap-6">
           <Link to="/" className="text-lg font-semibold">
             Restaurant Reservation
@@ -45,7 +44,7 @@ export default function Navbar() {
             {user.role === "user" && (
               <>
                 <Link to="/create" className={linkClass("/create")}>
-                  Create Reservation
+                   New Reservation
                 </Link>
                 <Link
                   to="/my-reservations"
@@ -88,7 +87,7 @@ export default function Navbar() {
       </div>
        {open && (
         <div className="border-t bg-background md:hidden">
-          <nav className="flex flex-col px-4 py-2">
+          <nav className="flex flex-col px-4 py-2 gap-4">
             <Link to="/" className={linkClass("/")} onClick={() => setOpen(false)}>
               Home
             </Link>
@@ -107,7 +106,7 @@ export default function Navbar() {
                   className={linkClass("/create")}
                   onClick={() => setOpen(false)}
                 >
-                  Create Reservation
+                  New Reservation
                 </Link>
                 <Link
                   to="/my-reservations"
@@ -134,7 +133,7 @@ export default function Navbar() {
               size="sm"
               className="mt-2"
               onClick={handleLogout}
-            >
+              >
               Logout
             </Button>
           </nav>

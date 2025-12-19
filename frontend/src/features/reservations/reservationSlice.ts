@@ -45,38 +45,37 @@ const reservationSlice = createSlice({
   extraReducers: builder => {
     builder
       .addCase(fetchMyReservations.pending, state => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchMyReservations.fulfilled, (state, action) => {
-        state.loading = false;
-        state.list = action.payload;
-      })
-      .addCase(fetchMyReservations.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
-      .addCase(createReservation.fulfilled, (state, action) => {
-        state.list.unshift(action.payload);
-      })
-      .addCase(cancelReservation.fulfilled, (state, action) => {
-        state.list = state.list.map(r =>
-          r._id === action.payload
-            ? { ...r, status: "CANCELLED" }
-            : r
-        );
-      })
-      .addCase(cancelReservation.rejected, (state, action) => {
-        state.error = action.payload as string;
-      })
-      .addCase(createReservation.pending, state => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(createReservation.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload as string;
-      })
+      state.loading = true;
+    })
+    .addCase(fetchMyReservations.fulfilled, (state, action) => {
+      state.loading = false;
+      state.list = action.payload;
+    })
+    .addCase(fetchMyReservations.rejected, state => {
+      state.loading = false;
+    })
+
+    
+    .addCase(createReservation.pending, state => {
+      state.loading = true;
+      state.error = null;
+    })
+    .addCase(createReservation.fulfilled, (state, action) => {
+      state.loading = false;
+      state.list.unshift(action.payload);
+    })
+    .addCase(createReservation.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload as string;
+    })
+
+    .addCase(cancelReservation.fulfilled, (state, action) => {
+      state.list = state.list.map(r =>
+        r._id === action.payload
+          ? { ...r, status: "CANCELLED" }
+          : r
+      );
+    });
   },
 });
 

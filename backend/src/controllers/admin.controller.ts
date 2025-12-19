@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import { Reservation } from '../models/Reservation';
+import { Table } from '../models/Table';
 
 export const getAllReservations = async (
   _req: Request,
@@ -54,6 +55,18 @@ export const deleteReservation = async (req: Request, res: Response) => {
     }
 
     res.json({ message: 'Reservation deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+export const getAllTables = async (
+  req: Request,
+  res: Response
+) => {
+  try {
+    const tables = await Table.find().sort({ tableNumber: 1 });
+    res.json(tables);
   } catch (err) {
     res.status(500).json({ message: 'Server error' });
   }

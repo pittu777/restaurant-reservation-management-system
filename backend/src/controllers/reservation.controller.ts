@@ -1,7 +1,8 @@
 import { Response } from 'express';
 import { Reservation } from '../models/Reservation';
-import { findAvailableTable } from '../services/availability.service';
+import { findAvailableTable, getAvailableTablesCount } from '../services/availability.service';
 import { AuthRequest } from '../middlewares/auth.middleware';
+import { Table } from '../models/Table';
 
 export const createReservation = async (
   req: AuthRequest,
@@ -65,4 +66,27 @@ export const cancelMyReservation = async (
   await reservation.save();
 
   res.json({ message: 'Reservation cancelled successfully' });
+};
+
+export const getAvailableTables = async (
+  req: AuthRequest,
+  res: Response
+) => {
+  try {
+    const { date, timeSlot, guests } = req.query;
+
+    if (!date || !timeSlot || !guests) {
+      return res.status(400).json({ message: 'Missing required parameters: date, timeSlot, guests' });
+    }
+
+    const result = await getAvailableTablesCount(
+      date as string,
+      timeSlot as string,
+      parseInt(guests as string)
+    );
+
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
 };
