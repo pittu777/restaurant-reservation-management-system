@@ -3,6 +3,7 @@ import {
   getAllReservations,
   getReservationsByDate,
   cancelAnyReservation,
+  deleteReservation
 } from '../controllers/admin.controller';
 import { authenticate } from '../middlewares/auth.middleware';
 import { authorize } from '../middlewares/role.middleware';
@@ -13,6 +14,7 @@ router.use(authenticate, authorize('admin'));
 
 router.get('/reservations', getAllReservations);
 router.get('/reservations/by-date', getReservationsByDate);
-router.delete('/reservations/:id', cancelAnyReservation);
+router.patch('/reservations/:id/cancel', cancelAnyReservation);
+router.delete('/reservations/:id', deleteReservation);
 
 export default router;

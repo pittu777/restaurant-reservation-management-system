@@ -3,23 +3,23 @@ import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import api from "@/lib/axios";
+import { useAppDispatch, useAppSelector } from "@/app/hooks";
+import { register } from "@/features/auth/authSlice";
 
 export default function Register() {
   const navigate = useNavigate();
+   const dispatch = useAppDispatch();
+  const { loading, error } = useAppSelector((state) => state.auth);
 
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      await api.post("/auth/register", { name, email, password });
-      navigate("/login");
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Registration failed");
+    const result = await dispatch(register({ name, email, password }));
+    if (result.meta.requestStatus === "fulfilled") {
+      navigate("/");
     }
   };
 
@@ -59,8 +59,8 @@ export default function Register() {
               <p className="text-sm text-destructive">{error}</p>
             )}
 
-            <Button type="submit" className="w-full">
-              Register
+             <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Registering..." : "Register"}
             </Button>
           </form>
 

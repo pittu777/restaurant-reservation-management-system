@@ -42,3 +42,19 @@ export const cancelAnyReservation = async (
 
   res.json({ message: 'Reservation cancelled by admin' });
 };
+
+export const deleteReservation = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const reservation = await Reservation.findByIdAndDelete(id);
+
+    if (!reservation) {
+      return res.status(404).json({ message: 'Reservation not found' });
+    }
+
+    res.json({ message: 'Reservation deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};

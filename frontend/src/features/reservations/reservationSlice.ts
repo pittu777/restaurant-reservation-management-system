@@ -46,10 +46,15 @@ const reservationSlice = createSlice({
     builder
       .addCase(fetchMyReservations.pending, state => {
         state.loading = true;
+        state.error = null;
       })
       .addCase(fetchMyReservations.fulfilled, (state, action) => {
         state.loading = false;
         state.list = action.payload;
+      })
+      .addCase(fetchMyReservations.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
       })
       .addCase(createReservation.fulfilled, (state, action) => {
         state.list.unshift(action.payload);
@@ -60,7 +65,18 @@ const reservationSlice = createSlice({
             ? { ...r, status: "CANCELLED" }
             : r
         );
-      });
+      })
+      .addCase(cancelReservation.rejected, (state, action) => {
+        state.error = action.payload as string;
+      })
+      .addCase(createReservation.pending, state => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(createReservation.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
   },
 });
 

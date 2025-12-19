@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import { User } from '../models/User';
 import { signToken } from '../utils/jwt';
+import { AuthRequest } from '../middlewares/auth.middleware';
 
 export const register = async (req: Request, res: Response) => {
   const { name, email, password, role } = req.body;
@@ -23,6 +24,12 @@ export const register = async (req: Request, res: Response) => {
   const token = signToken({
     userId: user._id.toString(),
     role: user.role,
+  });
+  res.cookie('token', token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'strict',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
   res.status(201).json({
@@ -53,6 +60,12 @@ export const login = async (req: Request, res: Response) => {
     userId: user._id.toString(),
     role: user.role,
   });
+  res.cookie('token', token, {
+    httpOnly:true,
+    secure:process.env.NODE_ENV==="production",
+    sameSite:'strict',
+    maxAge:7*24*60*1000,
+  })
 
   res.json({
     token,
@@ -63,4 +76,25 @@ export const login = async (req: Request, res: Response) => {
       role: user.role,
     },
   });
+};
+
+export const getCurrentUser = async (req: AuthRequest, res: Response) => {
+  try {
+    const user = await User.findById(req.user?.userId);
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.json({
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
 };
