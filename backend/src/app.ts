@@ -10,7 +10,10 @@ import cookieParser from 'cookie-parser';
 const app = express();
 
 // CORS Configuration with environment variables
-const allowedOrigins = (process.env.ALLOWED_ORIGINS || '').split(",");
+const allowedOrigins = (process.env.ALLOWED_ORIGINS || '')
+  .split(',')
+  .map(origin => origin.trim())
+  .filter(origin => origin !== '');
 
 app.use(cors({
     origin: (origin, callback) => {
