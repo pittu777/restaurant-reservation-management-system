@@ -224,19 +224,6 @@ export function CreateReservationForm() {
               </div>
             )}
 
-            {/* Form Instructions */}
-            <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-3 text-sm text-muted-foreground space-y-1">
-              <p className="font-medium text-blue-900 dark:text-blue-100">
-                📋 How it works:
-              </p>
-              <ul className="list-disc pl-5 space-y-1 text-blue-800 dark:text-blue-200">
-                <li>Select a future date (not in the past)</li>
-                <li>Choose your preferred time slot</li>
-                <li>Tell us how many guests will be dining</li>
-                <li>We'll automatically assign the best available table</li>
-              </ul>
-            </div>
-
             {/* Submit Button */}
             <Button
               type="submit"

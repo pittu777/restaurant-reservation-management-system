@@ -6,10 +6,8 @@ import gsap from "gsap";
 import {
   AdminTablesOverview,
   FeaturesGrid,
-  HowItWorks,
   QuickActionCard,
   QuickLinks,
-  SystemOverview,
   VisualTables,
   WelcomeHeader,
   TableManagement,
@@ -128,8 +126,6 @@ export default function HomeTab() {
       )}
 
       <FeaturesGrid isAdmin={isAdmin} />
-      <HowItWorks isAdmin={isAdmin} />
-      <SystemOverview />
     </div>
   );
 }
