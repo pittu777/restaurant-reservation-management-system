@@ -155,7 +155,7 @@ export function CreateReservationForm() {
 
   return (
     <div ref={formRef}>
-      <Card className="border-l-4 border-l-primary">
+      <Card>
         <CardHeader className="pb-4">
           <CardTitle className="text-2xl">Create Your Reservation</CardTitle>
           <p className="text-sm text-muted-foreground mt-1">

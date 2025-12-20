@@ -1,4 +1,4 @@
-import HomeTab from "@/components/layout/HomeTab";
+import HomeTab from "@/components/home/HomeTab";
 
 
 export default function Home() {

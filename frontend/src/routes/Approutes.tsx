@@ -4,14 +4,14 @@ import { Routes, Route, Navigate } from "react-router-dom";
 
 import AppLayout from "./../components/layout/AppLayout";
 import { ProtectedRoute } from "./../components/layout/ProtectedRoute";
-import Login from "./../pages/Login";
-import Register from "./../pages/Register";
 import AdminDashboard from "./../pages/AdminDashboard";
 import Home from "@/pages/Home";
 import CreateReservation from "@/pages/CreateReservation";
 import MyReservations from "@/pages/MyReservations";
 import UserProfile from "@/pages/UserProfile";
-import AuthLayout from "@/components/layout/AuthLayout";
+import AuthLayout from "@/features/auth/components/AuthLayout";
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
 
 export default function AppRoutes() {
   return (
@@ -20,7 +20,7 @@ export default function AppRoutes() {
         path="/login"
         element={
           <AuthLayout>
-            <Login />
+            <LoginPage />
           </AuthLayout>
         }
       />
@@ -29,7 +29,7 @@ export default function AppRoutes() {
         path="/register"
         element={
           <AuthLayout>
-            <Register />
+            <RegisterPage />
           </AuthLayout>
         }
       />

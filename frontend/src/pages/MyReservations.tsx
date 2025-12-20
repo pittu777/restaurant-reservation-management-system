@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/app/hooks";
 import { fetchMyReservations } from "@/features/reservations/reservationSlice";
-import { ReservationList } from "@/components/reservations/ReservationList";
+import { ReservationList } from "@/features/reservations/components/ReservationList";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function MyReservations() {

@@ -10,8 +10,14 @@ const api = axios.create({
 api.interceptors.response.use(
   response => response,
   error => {
-    if (error.response?.status === 401) {
+    if (error.response?.status === 401 && error.config?.url === "/auth/me") {
+      return Promise.reject(error);
     }
+
+    if (error.response?.status === 401) {
+      console.warn("Authentication required");
+    }
+
     return Promise.reject(error);
   }
 );

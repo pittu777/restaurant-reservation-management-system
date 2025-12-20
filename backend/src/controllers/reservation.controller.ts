@@ -90,3 +90,106 @@ export const getAvailableTables = async (
     res.status(500).json({ message: 'Server error' });
   }
 };
+
+export const getTablesWithStatus = async (
+  req: AuthRequest,
+  res: Response
+) => {
+  try {
+    const { date, timeSlot } = req.query;
+
+    if (!date || !timeSlot) {
+      return res.status(400).json({ message: 'Missing required parameters: date, timeSlot' });
+    }
+
+    // Get all tables
+    const allTables = await Table.find().sort({ tableNumber: 1 });
+
+    // Get booked tables for this date/time
+    const bookedReservations = await Reservation.find({
+      date: date as string,
+      timeSlot: timeSlot as string,
+      status: 'ACTIVE',
+    }).select('table');
+
+    const bookedTableIds = bookedReservations.map(r => r.table.toString());
+
+    // Map tables with availability status
+    const tablesWithStatus = allTables.map(table => ({
+      _id: table._id,
+      tableNumber: table.tableNumber,
+      capacity: table.capacity,
+      isBooked: bookedTableIds.includes(table._id.toString()),
+    }));
+
+    res.json(tablesWithStatus);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+
+export const getAllTables = async (
+  req: AuthRequest,
+  res: Response
+) => {
+  try {
+    const tables = await Table.find().sort({ tableNumber: 1 });
+    res.json(tables);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+export const createTable = async (
+  req: AuthRequest,
+  res: Response
+) => {
+  try {
+    const { capacity } = req.body;
+
+    if (!capacity || capacity <= 0 || capacity > 20) {
+      return res.status(400).json({ message: 'Invalid capacity. Must be between 1 and 20.' });
+    }
+
+    // Get next table number
+    const lastTable = await Table.findOne().sort({ tableNumber: -1 });
+    const tableNumber = (lastTable?.tableNumber || 0) + 1;
+
+    const table = await Table.create({ tableNumber, capacity });
+    res.status(201).json(table);
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};
+
+export const deleteTable = async (
+  req: AuthRequest,
+  res: Response
+) => {
+  try {
+    const { id } = req.params;
+
+    // Check if table has active reservations
+    const activeReservations = await Reservation.findOne({
+      table: id,
+      status: 'ACTIVE',
+    });
+
+    if (activeReservations) {
+      return res.status(409).json({
+        message: 'Cannot delete table with active reservations. Cancel all reservations first.',
+      });
+    }
+
+    const table = await Table.findByIdAndDelete(id);
+
+    if (!table) {
+      return res.status(404).json({ message: 'Table not found' });
+    }
+
+    res.json({ message: 'Table deleted successfully' });
+  } catch (err) {
+    res.status(500).json({ message: 'Server error' });
+  }
+};

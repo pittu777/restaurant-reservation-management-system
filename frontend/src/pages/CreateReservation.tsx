@@ -1,4 +1,4 @@
-import { CreateReservationForm } from "@/components/reservations/CreateReservationForm";
+import { CreateReservationForm } from "@/features/reservations/components/CreateReservationForm";
 
 export default function CreateReservation() {
   return (

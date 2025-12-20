@@ -59,15 +59,3 @@ export const deleteReservation = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Server error' });
   }
 };
-
-export const getAllTables = async (
-  req: Request,
-  res: Response
-) => {
-  try {
-    const tables = await Table.find().sort({ tableNumber: 1 });
-    res.json(tables);
-  } catch (err) {
-    res.status(500).json({ message: 'Server error' });
-  }
-};
