@@ -38,6 +38,8 @@ This application allows customers to create and manage their reservations while 
 - **Manage Tables**: Create and delete restaurant tables
 - **Admin Dashboard**: Dedicated admin panel with reservation statistics
 - **Role-Based Access**: Restricted access to admin-only endpoints
+# ADMIN USER FOR TESTING : admintest1.com
+# ADMIN PASSWORD : 123456
 
 ## 🛠 Tech Stack
 
