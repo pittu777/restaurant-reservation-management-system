@@ -102,10 +102,8 @@ export const getTablesWithStatus = async (
       return res.status(400).json({ message: 'Missing required parameters: date, timeSlot' });
     }
 
-    // Get all tables
     const allTables = await Table.find().sort({ tableNumber: 1 });
 
-    // Get booked tables for this date/time
     const bookedReservations = await Reservation.find({
       date: date as string,
       timeSlot: timeSlot as string,
@@ -114,7 +112,7 @@ export const getTablesWithStatus = async (
 
     const bookedTableIds = bookedReservations.map(r => r.table.toString());
 
-    // Map tables with availability status
+    // tables with availability status
     const tablesWithStatus = allTables.map(table => ({
       _id: table._id,
       tableNumber: table.tableNumber,

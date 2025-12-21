@@ -16,7 +16,7 @@ import RegisterPage from "@/pages/RegisterPage";
 export default function AppRoutes() {
   return (
     <Routes>
-        <Route
+      <Route
         path="/login"
         element={
           <AuthLayout>
@@ -39,7 +39,7 @@ export default function AppRoutes() {
         element={
           <ProtectedRoute>
             <AppLayout>
-              <Home/>
+              <Home />
             </AppLayout>
           </ProtectedRoute>
         }
@@ -76,15 +76,15 @@ export default function AppRoutes() {
         }
       />
       <Route
-  path="/profile"
-  element={
-    <ProtectedRoute role="user">
-      <AppLayout>
-        <UserProfile />
-      </AppLayout>
-    </ProtectedRoute>
-  }
-/>
+        path="/profile"
+        element={
+          <ProtectedRoute role="user">
+            <AppLayout>
+              <UserProfile />
+            </AppLayout>
+          </ProtectedRoute>
+        }
+      />
 
 
       <Route path="*" element={<Navigate to="/" />} />

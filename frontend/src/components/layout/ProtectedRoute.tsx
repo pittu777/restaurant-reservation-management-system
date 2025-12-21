@@ -10,12 +10,12 @@ interface ProtectedRouteProps {
 export function ProtectedRoute({ children, role }: ProtectedRouteProps) {
   const user = useAppSelector(state => state.auth.user);
 
-  // Not logged in
+  // not logged in
   if (!user) {
     return <Navigate to="/login" replace />;
   }
 
-  // Role mismatch
+  
   if (role && user.role !== role) {
     return <Navigate to="/" replace />;
   }

@@ -16,9 +16,9 @@ export default function Navbar() {
   if (!user) return null;
 
   const handleLogout = useCallback(() => {
-  dispatch(logoutUser());
-  navigate("/login");
-}, [dispatch, navigate]);
+    dispatch(logoutUser());
+    navigate("/login");
+  }, [dispatch, navigate]);
 
   const linkClass = (path: string) =>
     cn(
@@ -44,7 +44,7 @@ export default function Navbar() {
             {user.role === "user" && (
               <>
                 <Link to="/create" className={linkClass("/create")}>
-                   New Reservation
+                  New Reservation
                 </Link>
                 <Link
                   to="/my-reservations"
@@ -52,9 +52,9 @@ export default function Navbar() {
                 >
                   My Reservations
                 </Link>
-                            <Link to="/profile" className={linkClass("/profile")}>
-  Profile
-</Link>
+                <Link to="/profile" className={linkClass("/profile")}>
+                  Profile
+                </Link>
               </>
             )}
 
@@ -67,7 +67,7 @@ export default function Navbar() {
           </nav>
         </div>
 
-        {/* Right: Role + Logout */}
+
         <div className="hidden sm:flex items-center gap-4">
           <span className="text-xs rounded bg-muted px-2 py-1 capitalize">
             {user.name}
@@ -76,7 +76,7 @@ export default function Navbar() {
             Logout
           </Button>
         </div>
-         <Button
+        <Button
           variant="ghost"
           size="icon"
           className="md:hidden"
@@ -85,7 +85,7 @@ export default function Navbar() {
           {open ? <X /> : <Menu />}
         </Button>
       </div>
-       {open && (
+      {open && (
         <div className="border-t bg-background md:hidden">
           <nav className="flex flex-col px-4 py-2 gap-4">
             <Link to="/" className={linkClass("/")} onClick={() => setOpen(false)}>
@@ -133,7 +133,7 @@ export default function Navbar() {
               size="sm"
               className="mt-2"
               onClick={handleLogout}
-              >
+            >
               Logout
             </Button>
           </nav>

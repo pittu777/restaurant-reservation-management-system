@@ -9,7 +9,6 @@ import cookieParser from 'cookie-parser';
 
 const app = express();
 
-// CORS Configuration with environment variables
 const allowedOrigin = process.env.ALLOWED_ORIGIN;
 
 app.use(cors({

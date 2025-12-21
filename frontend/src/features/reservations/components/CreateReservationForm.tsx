@@ -97,7 +97,7 @@ export function CreateReservationForm() {
     if (result.meta.requestStatus === "fulfilled") {
       toast.success("Reservation created successfully!");
 
-      // Animate success - shake form
+     
       gsap.to(formRef.current, {
         x: 5,
         duration: 0.1,
@@ -106,7 +106,7 @@ export function CreateReservationForm() {
         ease: "power1.inOut",
       });
 
-      // Reset form with stagger
+      
       gsap.to(
         [
           formRef.current?.querySelector("input[type='date']"),
@@ -142,7 +142,7 @@ export function CreateReservationForm() {
     if (result.meta.requestStatus === "rejected") {
       toast.error("No available table for the selected time slot");
 
-      // Animate error shake
+      
       gsap.to(formRef.current, {
         x: -5,
         duration: 0.1,
@@ -197,7 +197,7 @@ export function CreateReservationForm() {
                 </Select>
               </div>
 
-              {/* Guests Input */}
+             
               <div className="space-y-2">
                 <label className="text-sm font-medium">Number of Guests *</label>
                 <Input
@@ -213,7 +213,7 @@ export function CreateReservationForm() {
               </div>
             </div>
 
-            {/* Error Message */}
+            
             {error && (
               <div
                 data-error-message
@@ -224,7 +224,7 @@ export function CreateReservationForm() {
               </div>
             )}
 
-            {/* Submit Button */}
+            
             <Button
               type="submit"
               disabled={loading || !date || !timeSlot}

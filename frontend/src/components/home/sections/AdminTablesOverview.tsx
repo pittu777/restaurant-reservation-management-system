@@ -16,7 +16,7 @@ export function AdminTablesOverview({ allTables, loading }: AdminTablesOverviewP
           <p className="text-sm text-muted-foreground">Loading tables...</p>
         ) : (
           <>
-            {/* Stats Grid */}
+            
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="bg-blue-50 dark:bg-blue-950 p-4 rounded-lg border border-blue-200 dark:border-blue-800">
                 <p className="text-sm text-muted-foreground mb-1">Total Tables</p>
@@ -44,7 +44,7 @@ export function AdminTablesOverview({ allTables, loading }: AdminTablesOverviewP
               </div>
             </div>
 
-            {/* Tables List */}
+            
             {allTables.length > 0 ? (
               <div className="border rounded-lg overflow-hidden">
                 <table className="w-full text-sm">

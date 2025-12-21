@@ -10,27 +10,40 @@ import { Eye, EyeOff } from "lucide-react";
 
 export default function Register() {
   const navigate = useNavigate();
-   const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch();
   const { loading, error } = useAppSelector((state) => state.auth);
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-const [showPassword, setShowPassword] = useState(false);
-const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [formData, setFormData] = useState({
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+});
+
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { name, value } = e.target;
+  setFormData(prev => ({
+    ...prev,
+    [name]: value,
+  }));
+};
+
 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const { name, email, password, confirmPassword } = formData;
     if (password !== confirmPassword) {
-  toast.error("Passwords do not match");
-  return;
-}
+      toast.error("Passwords do not match");
+      return;
+    }
 
     const result = await dispatch(register({ name, email, password }));
     if (result.meta.requestStatus === "fulfilled") {
-       toast.success("Account created successfully");
+      toast.success("Account created successfully");
       navigate("/");
     }
   };
@@ -54,52 +67,56 @@ const [showConfirmPassword, setShowConfirmPassword] = useState(false);
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
           <Input
+          name="name"
             placeholder="Name"
-            value={name}
-            onChange={e => setName(e.target.value)}
+            value={formData.name}
+            onChange={handleChange}
             required
           />
 
           <Input
+          name="email"
             type="email"
             placeholder="Email"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+            value={formData.email}
+            onChange={handleChange}
             required
           />
 
-         <div className="relative">
-  <Input
-    type={showPassword ? "text" : "password"}
-    placeholder="Password"
-    value={password}
-    onChange={e => setPassword(e.target.value)}
-    required
-  />
-  <button
-    type="button"
-    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-    onClick={() => setShowPassword(prev => !prev)}
-  >
-    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-  </button>
-</div>
-<div className="relative">
-  <Input
-    type={showConfirmPassword ? "text" : "password"}
-    placeholder="Re-enter Password"
-    value={confirmPassword}
-    onChange={e => setConfirmPassword(e.target.value)}
-    required
-  />
-  <button
-    type="button"
-    className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
-    onClick={() => setShowConfirmPassword(prev => !prev)}
-  >
-    {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
-  </button>
-</div>
+          <div className="relative">
+            <Input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              placeholder="Password"
+              value={formData.password}
+              onChange={handleChange}
+              required
+            />
+            <button
+              type="button"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+              onClick={() => setShowPassword(prev => !prev)}
+            >
+              {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+            </button>
+          </div>
+          <div className="relative">
+            <Input
+              type={showConfirmPassword ? "text" : "password"}
+               name="confirmPassword"
+              placeholder="Re-enter Password"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              required
+            />
+            <button
+              type="button"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground"
+              onClick={() => setShowConfirmPassword(prev => !prev)}
+            >
+              {showConfirmPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+            </button>
+          </div>
 
 
 

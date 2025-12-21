@@ -26,7 +26,7 @@ export default function HomeTab() {
 
   const isAdmin = user?.role === "admin";
 
-  // Get today's date and current time slot
+  
   const getTodayAndTimeSlot = () => {
     const today = new Date().toISOString().split("T")[0];
     const hour = new Date().getHours();
@@ -42,7 +42,7 @@ export default function HomeTab() {
     return { today, timeSlot };
   };
 
-  // Fetch tables data
+  // fetch tables data
   useEffect(() => {
     if (isAdmin) {
       dispatch(fetchAllTables());
@@ -52,7 +52,7 @@ export default function HomeTab() {
     }
   }, [dispatch, isAdmin]);
 
-  // GSAP animation
+  
   useEffect(() => {
     if (!containerRef.current) return;
 
@@ -80,7 +80,7 @@ export default function HomeTab() {
     <div ref={containerRef} className="space-y-6">
       <WelcomeHeader isAdmin={isAdmin} />
 
-      {/* USER SECTION - Visual Tables */}
+      
       {user?.role === "user" && (
         <>
           <QuickActionCard
@@ -102,7 +102,7 @@ export default function HomeTab() {
         </>
       )}
 
-      {/* ADMIN SECTION */}
+      
       {isAdmin && (
         <>
           <QuickActionCard
@@ -113,7 +113,7 @@ export default function HomeTab() {
             isPrimary
           />
 
-          {/* TABLE MANAGEMENT TAB */}
+          
           <TableManagement
             showTableManagement={showTableManagement}
             setShowTableManagement={setShowTableManagement}

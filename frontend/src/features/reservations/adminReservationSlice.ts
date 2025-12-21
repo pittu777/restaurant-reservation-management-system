@@ -68,7 +68,7 @@ const adminReservationSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      // Fetch All
+      
       .addCase(fetchAllReservations.pending, state => {
         state.loading = true;
         state.error = null;
@@ -81,7 +81,7 @@ const adminReservationSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-      // Fetch By Date
+      // fetch By Date
       .addCase(fetchReservationsByDate.pending, state => {
         state.loading = true;
         state.error = null;
@@ -94,7 +94,7 @@ const adminReservationSlice = createSlice({
         state.loading = false;
         state.error = action.payload as string;
       })
-      // Cancel
+      
       .addCase(cancelReservation.fulfilled, (state, action) => {
         state.list = state.list.map(r =>
           r._id === action.payload
@@ -105,7 +105,7 @@ const adminReservationSlice = createSlice({
       .addCase(cancelReservation.rejected, (state, action) => {
         state.error = action.payload as string;
       })
-      // Delete
+      // delete
       .addCase(deleteReservation.fulfilled, (state, action) => {
         state.list = state.list.filter(r => r._id !== action.payload);
       })

@@ -16,11 +16,11 @@ const reservationSchema = new Schema(
     },
     date: {
       type: String,
-      required: true, // YYYY-MM-DD
+      required: true,
     },
     timeSlot: {
       type: String,
-      required: true, // e.g. "18:00-20:00"
+      required: true,
     },
     guests: {
       type: Number,

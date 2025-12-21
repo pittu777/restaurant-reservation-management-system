@@ -90,7 +90,7 @@ export function VisualTables({ tables, onTableClick }: VisualTablesProps) {
                     {getTableType(table.capacity)}
                   </div>
 
-                  {/* Available Badge */}
+                  
                   <div className="mt-3 inline-block px-2 py-1 bg-green-200 dark:bg-green-800 text-green-800 dark:text-green-200 rounded text-xs font-semibold">
                     Available
                   </div>
@@ -131,12 +131,12 @@ export function VisualTables({ tables, onTableClick }: VisualTablesProps) {
                   key={table._id}
                   className={`p-4 rounded-lg border-2 transition-all duration-200 ${getTableColor(table.capacity, true)}`}
                 >
-                  {/* Table Number */}
+                  
                   <div className={`text-xl font-bold mb-2 ${getTextColor(table.capacity, true)}`}>
                     Table {table.tableNumber}
                   </div>
 
-                  {/* Seats Visualization */}
+                  
                   <div className="flex flex-wrap gap-1.5 mb-3 justify-center">
                     {Array.from({ length: table.capacity }).map((_, idx) => (
                       <div
@@ -146,7 +146,7 @@ export function VisualTables({ tables, onTableClick }: VisualTablesProps) {
                     ))}
                   </div>
 
-                  {/* Capacity Info */}
+                  
                   <div className="text-xs font-semibold mb-1">
                     {table.capacity} Seats
                   </div>
@@ -154,7 +154,7 @@ export function VisualTables({ tables, onTableClick }: VisualTablesProps) {
                     {getTableType(table.capacity)}
                   </div>
 
-                  {/* Booked Badge */}
+                  
                   <div className="mt-3 inline-block px-2 py-1 bg-red-200 dark:bg-red-800 text-red-800 dark:text-red-200 rounded text-xs font-semibold">
                     Booked
                   </div>

@@ -6,7 +6,6 @@ export const findAvailableTable = async (
   timeSlot: string,
   guests: number
 ) => {
-  // Get tables that can seat the guests
   const tables = await Table.find({
     capacity: { $gte: guests },
   }).sort({ capacity: 1 });
@@ -32,14 +31,13 @@ export const getAvailableTablesCount = async (
   timeSlot: string,
   guests: number
 ) => {
-  // Get all tables that can seat the guests
   const suitableTables = await Table.find({
     capacity: { $gte: guests },
   });
 
   const suitableTableIds = suitableTables.map(t => t._id);
 
-  // Get booked tables for this date/time
+  
   const bookedTables = await Reservation.find({
     date,
     timeSlot,
